@@ -1,4 +1,4 @@
-# pronto
+# frontend
 
 ## Project setup
 ```
