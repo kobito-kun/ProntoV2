@@ -25,7 +25,9 @@ app.use("/graphql", graphqlHTTP({
 
 // Express Test Route
 app.get("/", (_, res) => {
-  res.send("epic");
+  Product.find({}, (err, result) => {
+    res.json(result)
+  })
 })
 
 // Mongoose Connection

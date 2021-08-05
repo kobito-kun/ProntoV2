@@ -3,7 +3,7 @@ const {User} = require("./models/User.models.js");
 
 module.exports = {
   
-  /*
+  /**
   * Returns an array of users
   * @return {(Object|Array)}
   */
@@ -17,7 +17,7 @@ module.exports = {
     })
   },
 
-  /*
+  /**
   * Returns a user
   * @params {String} id
   * @return {Object}
@@ -32,12 +32,12 @@ module.exports = {
     })
   },
 
-  /*
+  /**
   * Returns an array of products
   * @return {(Object|Array)}
   */    
 
-  getProducts: () => {
+  allProducts: () => {
     return new Promise((resolve, reject) => {
       Product.find({}, (err, result) => {
         if(err) reject(err);
@@ -46,7 +46,7 @@ module.exports = {
     })
   },
 
-  /*
+  /**
   * Returns a product
   * @params {String} id
   * @return {Object}
@@ -58,6 +58,28 @@ module.exports = {
         if(err) reject(err);
         else resolve(result);
       })
+    })
+  },
+
+  /**
+   * Creates a product
+   * @params {Object| {title: String, description: String, image: String, user: String, price: Float}}
+   * @return {Object}
+   */
+
+  createProduct: (input) => {
+    input = input.input;
+    return new Promise((resolve, reject) => {
+      const newProduct = new Product({
+        title: input["title"],
+        description: input["description"],
+        image: input["image"],
+        user: input["user"],
+        price: input["price"]
+      });
+      console.log(newProduct)
+      newProduct.save()
+      resolve(newProduct);
     })
   }
 }
