@@ -62,6 +62,21 @@ module.exports = {
   },
 
   /**
+   * Returns an array of user's products
+   * @param {id} Input
+   * @return {Array|Object}
+   */
+
+  getAllProductsFromUser: (user) => {
+    return new Promise((resolve, reject) => {
+      Product.find({user: user["user"]}, (err, result) => {
+        if(err) reject(err);
+        else resolve(result);
+      })
+    })
+  },
+
+  /**
    * Creates a product
    * @params {Object| {title: String, description: String, image: String, user: String, price: Float}}
    * @return {Object}
@@ -77,9 +92,8 @@ module.exports = {
         user: input["user"],
         price: input["price"]
       });
-      console.log(newProduct)
       newProduct.save()
       resolve(newProduct);
     })
-  }
+  },
 }

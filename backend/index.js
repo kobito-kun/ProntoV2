@@ -3,10 +3,12 @@ const express = require("express");
 const { graphqlHTTP } = require("express-graphql");
 const { buildSchema } = require("graphql");
 const mongoose = require("mongoose");
+const cors = require("cors");
 
 // Express Startup
 const app = express();
 const port = process.env.PORT || 5000;
+app.use(cors());
 
 // GraphQL Imports
 const schema = buildSchema(require("./schema.js"));
@@ -25,7 +27,10 @@ app.use("/graphql", graphqlHTTP({
 
 // Express Test Route
 app.get("/", (_, res) => {
-  Product.find({}, (err, result) => {
+  // Product.deleteMany({title: null}, (err, ree) => {
+  //   res.json(ree)
+  // })
+  Product.find({user: "60f470487fa26519907d72b9"}, (err, result) => {
     res.json(result)
   })
 })

@@ -35,6 +35,7 @@ type Query {
   getUser(_id: String!): User
   allProducts: [Product!]!
   getProduct(_id: String!): Product
+  getAllProductsFromUser(user: String!): [Product]
 }
 
 type Mutation {
