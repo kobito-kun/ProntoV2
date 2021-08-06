@@ -30,7 +30,19 @@ const routes: Array<RouteRecordRaw> = [
     name: "Profile",
     component: () =>
       import("@/views/Main/Profile.vue"),
-  }
+  },
+  {
+    path: "/product/:id",
+    name: "Product",
+    component: () =>
+      import("@/views/Main/Product.vue"),
+  },
+  {
+    path: "/dashboard",
+    name: "DashboardMain",
+    component: () =>
+      import("@/views/Dash/Home.vue"),
+  },
 ];
 
 const router = createRouter({
