@@ -33,17 +33,17 @@
                       </div>
                       <div class="ml-4">
                         <div class="text-sm font-medium text-gray-900">
-                          Joey Nguyen Man
+                          Ross Gross
                         </div>
                         <div class="text-sm text-gray-500">
-                          t.joeyma@gmail.com
+                          ross@dreamnetwork.com
                         </div>
                       </div>
                     </div>
                   </td>
                   <td class="px-6 py-4 whitespace-nowrap">
-                    <div class="text-sm text-gray-900">Kobi's Virginity </div>
-                    <div class="text-sm text-gray-500">This product includes kobi's virgini...</div>
+                    <div class="text-sm text-gray-900">Kobi's Operator</div>
+                    <div class="text-sm text-gray-500">This product includes kobi's operator...</div>
                   </td>
                   <td class="px-6 py-4 whitespace-nowrap">
                     <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
