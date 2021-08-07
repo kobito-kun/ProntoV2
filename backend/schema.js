@@ -16,6 +16,15 @@ type Product {
   price: Float!
 }
 
+type Order {
+  _id: String!
+  product: String!
+  total: Float!
+  email: String!
+  name: String!
+  date: String!
+}
+
 input ProductInput {
   title: String!
   description: String!
@@ -36,6 +45,8 @@ type Query {
   allProducts: [Product!]!
   getProduct(_id: String!): Product
   getAllProductsFromUser(user: String!): [Product]
+  getOrder(_id: String!): Order
+  allOrders: [Order!]!
 }
 
 type Mutation {

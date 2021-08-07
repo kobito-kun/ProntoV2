@@ -13,6 +13,7 @@
       <main-dashboard v-if="currentPanel == 'Main'" />
       <order-dashboard v-else-if="currentPanel == 'Orders'" />
       <account-dashboard v-else-if="currentPanel == 'Account'" />
+      <product-dashboard v-else-if="currentPanel == 'Products'"/>
     </div>
   </section>
 </template>
@@ -23,6 +24,7 @@ import {defineComponent} from 'vue';
 import MainDashboard from '../../components/MainDashboard.vue';
 import OrderDashboard from '../../components/OrderDashboard.vue';
 import AccountDashboard from '../../components/AccountDashboard.vue';
+import ProductDashboard from '../../components/ProductDashboard.vue';
 
 export default defineComponent({
   name: "DashboardMain",
@@ -34,7 +36,8 @@ export default defineComponent({
   components: {
     MainDashboard,
     OrderDashboard,
-    AccountDashboard
+    AccountDashboard,
+    ProductDashboard
   }
 })
 </script>

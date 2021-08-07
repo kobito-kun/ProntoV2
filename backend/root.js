@@ -1,5 +1,6 @@
 const {Product} = require("./models/Product.models.js");
 const {User} = require("./models/User.models.js");
+const {Order} = require("./models/Order.models.js");
 
 module.exports = {
   
@@ -71,7 +72,7 @@ module.exports = {
     return new Promise((resolve, reject) => {
       Product.find({user: user["user"]}, (err, result) => {
         if(err) reject(err);
-        else resolve(result);
+        else resolve(result); 
       })
     })
   },
@@ -86,14 +87,44 @@ module.exports = {
     input = input.input;
     return new Promise((resolve, reject) => {
       const newProduct = new Product({
-        title: input["title"],
-        description: input["description"],
-        image: input["image"],
-        user: input["user"],
-        price: input["price"]
+        title       : input["title"],
+        description : input["description"],
+        image       : input["image"],
+        user        : input["user"],
+        price       : input["price"]
       });
       newProduct.save()
       resolve(newProduct);
     })
   },
+
+  /**
+   * Gets an order
+   * @params {id} Input
+   * @returns {Object}
+   */
+
+  getOrder: (input) => {
+    return new Promise((resolve, reject) => {
+      Order.findOne({_id: input}, (err, result) => {
+        if(err) reject(err);
+        else resolve(result);
+      })
+    })
+  },
+
+  /**
+   * Gets all the orders [DEBUG]
+   * @returns {Array|Object}
+   */
+
+  allOrders: () => {
+    return new Promise((resolve, reject) => {
+      Order.find({}, (err, result) => {
+        if(err) reject(err);
+        else resolve(result);
+      })
+    })
+  }
+
 }
