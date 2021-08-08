@@ -30,7 +30,7 @@ export default defineComponent({
   name: "DashboardMain",
   data(){
     return {
-      currentPanel: "Account"
+      currentPanel: "Products"
     }
   },
   components: {

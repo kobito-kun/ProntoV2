@@ -1,17 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-type Order {
-  _id: String!
-  product: String!
-  total: Float!
-  email: String!
-  name: String!
-  date: String!
-}
-
-
-
 const OrderModel = new Schema({
   product: String,
   total: Number,

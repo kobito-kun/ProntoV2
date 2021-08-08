@@ -25,36 +25,33 @@
                 </tr>
               </thead>
               <tbody class="bg-white divide-y divide-gray-200">
-                <tr>
+                <tr v-for="product in products" :key="product._id">
                   <td class="px-6 py-4 whitespace-nowrap">
                     <div class="flex items-center">
                       <div class="flex-shrink-0 h-10 w-10 bg-blue-400 rounded-full">
-                        
                       </div>
                       <div class="ml-4">
                         <div class="text-sm font-medium text-gray-900">
-                          Kobi's Operator
+                          {{product.title}}
                         </div>
                       </div>
                     </div>
                   </td>
                   <td class="px-6 py-4 whitespace-nowrap">
-                    <div class="text-sm text-gray-500">This product includes kobi's operator...</div>
+                    <div style="max-width: 350px" class="text-sm text-gray-500 truncate">{{product.description}}</div>
                   </td>
                   <td class="px-6 py-4 whitespace-nowrap">
                     <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                      $0.00
+                      ${{product.price}}
                     </span>
                   </td>
                   <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    2021/08/06
+                    {{convertDate(product.date)}}
                   </td>
                   <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                    <a href="#" class="text-indigo-600 hover:text-indigo-900">View</a>
+                    <div v-on:click="this.$router.push(`/dashboard/product/${product._id}`)"  class="text-indigo-600 hover:text-indigo-900">View</div>
                   </td>
                 </tr>
-
-                <!-- More people... -->
               </tbody>
             </table>
           </div>
@@ -65,8 +62,27 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent } from 'vue';
+import axios from 'axios';
+
 export default defineComponent({
-  name: "ProductDashboardComponent"
+  name: "ProductDashboardComponent",
+  data() {
+    return {
+      products: null
+    }
+  },
+  methods: {
+    convertDate(date: any){
+      return new Date(Number(date)).toLocaleDateString()
+    }
+  },
+  mounted: function(){
+    (() => {
+      axios.get(`http://localhost:5000/graphql?query={getAllProductsFromUser(user: "60f470487fa26519907d72b9"){title description price date _id}}`).then(data => {
+        this.products = data["data"]["data"]["getAllProductsFromUser"];
+        })
+    })()
+  }
 })
 </script>
