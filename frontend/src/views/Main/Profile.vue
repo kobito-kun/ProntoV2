@@ -35,7 +35,7 @@ export default defineComponent({
   },
   methods: {
     validURL(str){
-      var pattern = new RegExp('^(https?:\\/\\/)?'+ // protocol
+      const pattern = new RegExp('^(https?:\\/\\/)?'+ // protocol
         '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+ // domain name
         '((\\d{1,3}\\.){3}\\d{1,3}))'+ // OR ip (v4) address
         '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ // port and path
@@ -46,7 +46,7 @@ export default defineComponent({
   },
   mounted: function(){
     (() => {
-      axios.get(`http://localhost:5000/graphql?query={getAllProductsFromUser(user: "${ this.$route.params.id }"){_id title price date} getUser(_id: "${ this.$route.params.id }"){username}}`).then(response => {
+      axios.get(`http://localhost:5000/graphql?query={getAllProductsFromUser(user: "${ this.$route.params.id }"){_id title price image date} getUser(_id: "${ this.$route.params.id }"){username}}`).then(response => {
         this.products = response["data"]["data"]["getAllProductsFromUser"];
         this.username = response["data"]["data"]["getUser"]["username"];
       })

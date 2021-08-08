@@ -43,6 +43,12 @@ const routes: Array<RouteRecordRaw> = [
     component: () =>
       import("@/views/Dash/Home.vue"),
   },
+  {
+    path: "/dashboard/product/add",
+    name: "DashboardProductAdd",
+    component: () =>
+      import("@/views/Dash/Add.vue")
+  },
 ];
 
 const router = createRouter({
