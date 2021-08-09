@@ -19,10 +19,12 @@ type Product {
 type Order {
   _id: String!
   product: String!
+  user: String!
   total: Float!
   email: String!
   name: String!
   date: String!
+  paid: Boolean!
 }
 
 input ProductInput {
@@ -46,7 +48,7 @@ type Query {
   getProduct(_id: String!): Product
   getAllProductsFromUser(user: String!): [Product]
   getOrder(_id: String!): Order
-  allOrders: [Order!]!
+  allOrders(user: String!): [Order!]!
 }
 
 type Mutation {

@@ -118,9 +118,9 @@ module.exports = {
    * @returns {Array|Object}
    */
 
-  allOrders: () => {
+  allOrders: (user) => {
     return new Promise((resolve, reject) => {
-      Order.find({}, (err, result) => {
+      Order.find({user: user["user"]}, (err, result) => {
         if(err) reject(err);
         else resolve(result);
       })

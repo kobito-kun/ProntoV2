@@ -1,7 +1,7 @@
 <template>
   <section>
     <section>
-      <div class="flex justify-center items-center flex-col p-8 mb-4 bg-blue-400 text-white select-none">
+      <div class="flex justify-center items-center flex-col p-8 mb-4 bg-blue-500 text-white select-none">
         <img src="@/assets/absol.jpg" class="w-40 rounded-full border-white border-2" />
         <h2 class="font-bold text-2xl">@{{username}}</h2>
       </div>

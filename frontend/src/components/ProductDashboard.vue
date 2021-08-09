@@ -69,7 +69,10 @@
                     {{convertDate(product.date)}}
                   </td>
                   <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                    <div v-on:click="this.$router.push(`/dashboard/product/${product._id}`)"  class="text-indigo-600 hover:text-indigo-900">View</div>
+                    <div class="text-indigo-600 hover:text-indigo-900">
+                      <a class="mr-2 cursor-pointer" v-on:click="updateProduct(product._id)">View</a>
+                      <a class="cursor-pointer" v-on:click="deleteProduct(product._id)">Delete</a>
+                    </div>
                   </td>
                 </tr>
               </tbody>
@@ -92,12 +95,14 @@ export default defineComponent({
       products: null,
       add: true,
       formInput: {
+        _id: "",
         title: "",
         description: "",
         image: "",
         price: "",
         user: "60f470487fa26519907d72b9"
-      }
+      },
+      update: false
     }
   },
   methods: {
@@ -107,12 +112,49 @@ export default defineComponent({
     logTest(){
       console.log(this.formInput)
     },
-    makeProduct(){
-      axios.post(`http://localhost:5000/graphql?query=mutation{createProduct(input: {title: "${this.formInput["title"]}" description: "${this.formInput["description"]}" image: "${this.formInput["image"]}" user: "${this.formInput["user"]}" price: ${this.formInput["price"]}}){_id}}`).then(() => {
-        // @ts-expect-error: it works but idk why it's saying it doesnt
-        this.$router.go("/dashboard")
+    updateProduct(id: any){
+      axios.get(`http://localhost:5000/graphql?query={getProduct(_id: "${id}"){title description image price}}`).then(response => {
+        this.formInput = response["data"]["data"]["getProduct"];
+        this.formInput["_id"] = id;
+        this.add = !this.add;
+        this.update = true
       })
     },
+    makeProduct(){
+      if(this.update == false){
+        axios.post(`http://localhost:5000/graphql?query=mutation{createProduct(input: {title: "${this.formInput["title"]}" description: "${this.formInput["description"]}" image: "${this.formInput["image"]}" user: "${this.formInput["user"]}" price: ${this.formInput["price"]}}){_id}}`).then(() => {
+          this.$router.push({name: "DashboardMain"})
+          this.add = !this.add
+          axios.get(`http://localhost:5000/graphql?query={getAllProductsFromUser(user: "60f470487fa26519907d72b9"){title description price date _id}}`).then(data => {
+            this.products = data["data"]["data"]["getAllProductsFromUser"];
+          })
+        })
+      }else{
+        const objectPost = {
+          _id: this.formInput["_id"],
+          title: this.formInput["title"],
+          description: this.formInput["description"],
+          image: this.formInput["image"],
+          price: this.formInput["price"]
+        }
+        axios.post(`http://localhost:5000/updateProduct`, objectPost).then(() => {
+          this.add = !this.add;
+          axios.get(`http://localhost:5000/graphql?query={getAllProductsFromUser(user: "60f470487fa26519907d72b9"){title description price date _id}}`).then(data => {
+            this.products = data["data"]["data"]["getAllProductsFromUser"];
+          })
+        })
+      }
+    },
+    deleteProduct(id: any){
+      if(confirm("Are you sure?")){
+        axios.delete(`http://localhost:5000/deleteProduct/${id}`).then(() => {
+          this.$router.push({name: "DashboardMain"})
+          axios.get(`http://localhost:5000/graphql?query={getAllProductsFromUser(user: "60f470487fa26519907d72b9"){title description price date _id}}`).then(data => {
+            this.products = data["data"]["data"]["getAllProductsFromUser"];
+          })
+        })
+      }
+    }
   },
   mounted: function(){
     (() => {

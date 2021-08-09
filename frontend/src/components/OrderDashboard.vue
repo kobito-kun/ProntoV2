@@ -19,13 +19,13 @@
                   <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Date
                   </th>
-                  <th scope="col" class="relative px-6 py-3">
-                    <span class="sr-only">View</span>
+                  <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Paid
                   </th>
                 </tr>
               </thead>
               <tbody class="bg-white divide-y divide-gray-200">
-                <tr>
+                <tr v-for="order in orders" :key="order._id">
                   <td class="px-6 py-4 whitespace-nowrap">
                     <div class="flex items-center">
                       <div class="flex-shrink-0 h-10 w-10">
@@ -33,32 +33,36 @@
                       </div>
                       <div class="ml-4">
                         <div class="text-sm font-medium text-gray-900">
-                          Ross Gross
+                          {{order.name}}
                         </div>
                         <div class="text-sm text-gray-500">
-                          ross@dreamnetwork.com
+                          {{order.email}}
                         </div>
                       </div>
                     </div>
                   </td>
                   <td class="px-6 py-4 whitespace-nowrap">
-                    <div class="text-sm text-gray-900">Kobi's Operator</div>
-                    <div class="text-sm text-gray-500">This product includes kobi's operator...</div>
+                    <div class="text-sm text-gray-900">{{order.product}}</div>
                   </td>
                   <td class="px-6 py-4 whitespace-nowrap">
                     <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                      $0.00
+                      ${{order.total}}
                     </span>
                   </td>
                   <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    2021/08/06
+                    {{convertDate(order.date)}}
                   </td>
-                  <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                    <a href="#" class="text-indigo-600 hover:text-indigo-900">View</a>
+                  <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium text-center">
+                    <div class="w-full text-center">
+                      <p class="rounded-lg shadow bg-green-300 py-1 text-white" v-if="order.paid == true">
+                        Paid
+                      </p>
+                      <p class="rounded-lg shadow bg-red-300 py-1 text-white" v-else>
+                        Not Paid
+                      </p>
+                    </div>
                   </td>
                 </tr>
-
-                <!-- More people... -->
               </tbody>
             </table>
           </div>
@@ -70,7 +74,26 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
+import axios from 'axios';
+
 export default defineComponent({
-  name: "OrderDashboard"
+  name: "OrderDashboard",
+  data(){
+    return {
+      orders: []
+    }
+  },
+  methods: {
+    convertDate(date: any){
+      return new Date(Number(date)).toLocaleDateString()
+    },
+  },
+  mounted: function(){
+    (() => {
+      axios.get(`http://localhost:5000/graphql?query={allOrders(user: "60f470487fa26519907d72b9"){_id name email product total date paid}}`).then(response => {
+        this.orders = response["data"]["data"]["allOrders"];
+      })
+    })()
+  }
 })
 </script>
