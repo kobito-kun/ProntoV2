@@ -8,6 +8,7 @@
       <h3 v-on:click="currentPanel = 'Products'" :class="currentPanel == 'Products' ? 'text-red-700' : ''" class="hover:text-blue-600 font-light my-4 duration-300 cursor-pointer text-lg"><i class="fas text-gray-600 mr-8 fa-box"></i> Products</h3>
       <h3 v-on:click="currentPanel = 'Orders'" :class="currentPanel == 'Orders' ? 'text-red-700' : ''" class="hover:text-blue-600 font-light my-4 duration-300 cursor-pointer text-lg"><i class="fas text-gray-600 mr-8 fa-folder"></i> Orders</h3>
       <h3 v-on:click="currentPanel = 'Account'" :class="currentPanel == 'Account' ? 'text-red-700' : ''" class="hover:text-blue-600 font-light my-4 duration-300 cursor-pointer text-lg"><i class="fas text-gray-600 mr-8 fa-user"></i> Account</h3>
+      <h3 v-on:click="logout" class="hover:text-blue-600 font-light my-4 duration-300 cursor-pointer text-lg"><i class="fas text-gray-600 mr-8 fa-sign-out-alt"></i> Logout</h3>
     </div>
     <div class="w-full overflow-y-scroll p-10 bg-gray-100 min-h-screen">
       <main-dashboard v-if="currentPanel == 'Main'" />
@@ -33,11 +34,25 @@ export default defineComponent({
       currentPanel: "Products"
     }
   },
+  methods:{
+    logout(){
+      localStorage.clear();
+      this.$router.push({name: "Home"})
+    }
+  },
   components: {
     MainDashboard,
     OrderDashboard,
     AccountDashboard,
     ProductDashboard
+  },
+  mounted: function(){
+    (() => {
+      const loggedIn = localStorage.getItem("token");
+      if(loggedIn == null || loggedIn == undefined){
+        this.$router.push({name: "Login"})
+      }
+    })()
   }
 })
 </script>

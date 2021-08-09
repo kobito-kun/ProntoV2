@@ -7,7 +7,9 @@
         </h3>
         <span>Create an account here</span>
       </div>
-      <button class="bg-blue-600 px-8 py-4 hover:bg-blue-800 duration-300 rounded-lg text-white">Get Started</button>
+      <router-link to="/login">
+        <button class="bg-blue-600 px-8 py-4 hover:bg-blue-800 duration-300 rounded-lg text-white">Get Started</button>
+      </router-link>
     </div>
   </section>
 </template>
