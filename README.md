@@ -43,6 +43,30 @@ npm install
 
 Refers to [`package.json`](https://github.com/kobito-kun/ProntoV2/blob/master/backend/package.json) to install the required packages / libraries for this project to be able to run.
 
+After all the above is done. We'll set up the .env file.
+
+```
+TOKEN_SECRET = <SECRET_TOKEN>
+MONGODB_URL = <MONGODB_URL>
+```
+
+In `<SECRET_TOKEN>` you'll first have to go into a console. Run:
+
+```
+node
+```
+
+To open the NodeJS CLI. Then run:
+
+```
+> require('crypto').randomBytes(64).toString('hex')
+// '09f26e402586e2faa8da4c98a35f1b20d6b033c6097befa8be3486a8295...'
+```
+
+In `<MONGODB_URL>` will be where your mongodb connection url will reside.
+
+After all that is done. Run:
+
 ```
 node app.js
 ```
