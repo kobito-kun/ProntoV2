@@ -1,6 +1,6 @@
 ## Pronto Project
 
-A multi-vendor e-commerce website made with Vuejs with GraphQL as the backend.
+A multi-vendor e-commerce website made with Vuejs with GraphQL as the backend. This project might have a few issues due to me rushing it. If you need anything please make an issue and I'll do it immediantly.
 
 ## Technologies Used
 
