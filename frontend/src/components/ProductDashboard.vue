@@ -125,7 +125,7 @@ export default defineComponent({
         axios.post(`http://localhost:5000/graphql?query=mutation{createProduct(input: {title: "${this.formInput["title"]}" description: "${this.formInput["description"]}" image: "${this.formInput["image"]}" user: "${this.formInput["user"]}" price: ${this.formInput["price"]}}){_id}}`).then(() => {
           this.$router.push({name: "DashboardMain"})
           this.add = !this.add
-          axios.get(`http://localhost:5000/graphql?query={getAllProductsFromUser(user: "60f470487fa26519907d72b9"){title description price date _id}}`).then(data => {
+          axios.get(`http://localhost:5000/graphql?query={getAllProductsFromUser(user: "${localStorage.getItem("_id")}"){title description price date _id}}`).then(data => {
             this.products = data["data"]["data"]["getAllProductsFromUser"];
           })
         })
@@ -139,7 +139,7 @@ export default defineComponent({
         }
         axios.post(`http://localhost:5000/updateProduct`, objectPost).then(() => {
           this.add = !this.add;
-          axios.get(`http://localhost:5000/graphql?query={getAllProductsFromUser(user: "60f470487fa26519907d72b9"){title description price date _id}}`).then(data => {
+          axios.get(`http://localhost:5000/graphql?query={getAllProductsFromUser(user: "${localStorage.getItem("_id")}"){title description price date _id}}`).then(data => {
             this.products = data["data"]["data"]["getAllProductsFromUser"];
           })
         })
@@ -149,7 +149,7 @@ export default defineComponent({
       if(confirm("Are you sure?")){
         axios.delete(`http://localhost:5000/deleteProduct/${id}`).then(() => {
           this.$router.push({name: "DashboardMain"})
-          axios.get(`http://localhost:5000/graphql?query={getAllProductsFromUser(user: "60f470487fa26519907d72b9"){title description price date _id}}`).then(data => {
+          axios.get(`http://localhost:5000/graphql?query={getAllProductsFromUser(user: "${localStorage.getItem("_id")}"){title description price date _id}}`).then(data => {
             this.products = data["data"]["data"]["getAllProductsFromUser"];
           })
         })
@@ -158,7 +158,7 @@ export default defineComponent({
   },
   mounted: function(){
     (() => {
-      axios.get(`http://localhost:5000/graphql?query={getAllProductsFromUser(user: "60f470487fa26519907d72b9"){title description price date _id}}`).then(data => {
+      axios.get(`http://localhost:5000/graphql?query={getAllProductsFromUser(user: "${localStorage.getItem("_id")}"){title description price date _id}}`).then(data => {
         this.products = data["data"]["data"]["getAllProductsFromUser"];
         })
     })()

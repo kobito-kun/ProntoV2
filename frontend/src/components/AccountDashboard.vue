@@ -36,7 +36,7 @@ export default defineComponent({
         email: this.input["email"]
       };
       axios.post("http://localhost:5000/updateProfile", dataToPost).then((response) => {
-        axios.get(`http://localhost:5000/graphql?query={getUser(_id: "60f470487fa26519907d72b9"){username _id email}}`).then(response => {
+        axios.get(`http://localhost:5000/graphql?query={getUser(_id: "${localStorage.getItem("_id")}"){username _id email}}`).then(response => {
           this.input = response["data"]["data"]["getUser"]
         })
       })
@@ -44,7 +44,7 @@ export default defineComponent({
   },
   mounted: function(){
     (() => {
-      axios.get(`http://localhost:5000/graphql?query={getUser(_id: "60f470487fa26519907d72b9"){username _id email}}`).then(response => {
+      axios.get(`http://localhost:5000/graphql?query={getUser(_id: "${localStorage.getItem("_id")}"){username _id email}}`).then(response => {
         this.input = response["data"]["data"]["getUser"]
       })
     })()

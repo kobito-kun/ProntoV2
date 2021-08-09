@@ -90,7 +90,7 @@ export default defineComponent({
   },
   mounted: function(){
     (() => {
-      axios.get(`http://localhost:5000/graphql?query={allOrders(user: "60f470487fa26519907d72b9"){_id name email product total date paid}}`).then(response => {
+      axios.get(`http://localhost:5000/graphql?query={allOrders(user: "${localStorage.getItem("_id")}"){_id name email product total date paid}}`).then(response => {
         this.orders = response["data"]["data"]["allOrders"];
       })
     })()

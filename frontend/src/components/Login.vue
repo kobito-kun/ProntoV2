@@ -31,6 +31,13 @@ export default defineComponent({
       }
     }
   },
+  mounted: function(){
+    (() => {
+      if(localStorage.getItem("token") !== null){
+        this.$router.push({name: "DashboardMain"})
+      }
+    })()
+  },
   methods: {
     handleSubmit(){
       const object = {
@@ -41,8 +48,10 @@ export default defineComponent({
         if(data.status === 202){
           this.errorMessage = "Wrong Credentials."
         }else{
-          const token = data["data"];
+          const token = data["data"]["token"];
+          const theId = data["data"]["_id"];
           localStorage.setItem("token", token);
+          localStorage.setItem("_id", theId);
           this.$router.push({name: "DashboardMain"})
         }
       })

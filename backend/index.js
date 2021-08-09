@@ -6,8 +6,7 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const jwt = require("jsonwebtoken");
 const jwt_decode = require("jwt-decode");
-
-const secretToken = "134994964b9caf7d2ff9a74889827041c20a5fb0fc78b68488c294b853f973a5a89cdbd5f275cb42e80baf0373640dc39891d6c6f25b5265269c297f0566f81e";
+require("dotenv/config");
 
 // Express Startup
 const app = express();
@@ -27,7 +26,7 @@ const {User} = require("./models/User.models.js");
 const {Order} = require("./models/Order.models.js");
 
 function generateAccessToken(data) {
-  return jwt.sign(data, secretToken, { expiresIn: '1d' });
+  return jwt.sign(data, process.env.SECRET_TOKEN, { expiresIn: '1d' });
 }
 
 function authenticateToken(req, res) {
@@ -37,7 +36,7 @@ function authenticateToken(req, res) {
 
   if (token == null) return authenticated = false;
 
-  jwt.verify(token, secretToken, (err, user) => {
+  jwt.verify(token, process.env.SECRET_TOKEN, (err, user) => {
     if (err) return authenticated = false;
     else return authenticated = true;
   })
@@ -103,10 +102,10 @@ app.post("/login", (req, res) => {
     else {
       try{
         if(user.password === password){
-          return res.json(generateAccessToken({
+          return res.json({
+            token: generateAccessToken({_id: user._id, secret_message: "hi mom",}),
             _id: user._id,
-            secret_message: "hi mom",
-          }));
+          });
         }else{
           return res.status(202).json({"message": "not authenticated"});
         }
@@ -118,7 +117,7 @@ app.post("/login", (req, res) => {
 })
 
 // Mongoose Connection
-mongoose.connect("mongodb://127.0.0.1:27017", {useNewUrlParser: true, useUnifiedTopology: true},  () => console.log("DB Connected."))
+mongoose.connect(process.env.MONGODB_URL, {useNewUrlParser: true, useUnifiedTopology: true},  () => console.log("DB Connected."))
 
 // Express Listening...
 app.listen(port, () => console.log("Server running at port " + port))
